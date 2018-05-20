@@ -18,12 +18,15 @@
 package com.ota.updates.activities;
 
 import android.annotation.SuppressLint;
+import android.app.ActionBar;
 import android.app.AlertDialog.Builder;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
+import android.graphics.PorterDuff;
+import android.graphics.drawable.Drawable;
 import android.media.Ringtone;
 import android.media.RingtoneManager;
 import android.net.Uri;
@@ -36,9 +39,11 @@ import android.preference.PreferenceActivity;
 import android.preference.PreferenceManager;
 import android.preference.RingtonePreference;
 import android.preference.SwitchPreference;
+import android.support.v4.app.NavUtils;
 import android.text.TextUtils;
 import android.util.Log;
 import android.util.SparseBooleanArray;
+import android.view.MenuItem;
 
 import com.ota.updates.R;
 import com.ota.updates.utils.Constants;
@@ -66,6 +71,14 @@ public class SettingsActivity extends PreferenceActivity implements OnPreference
     public void onCreate(Bundle savedInstanceState) {
         mContext = this;
         super.onCreate(savedInstanceState);
+
+        final ActionBar bar = getActionBar();
+        if (bar != null) {
+            final Drawable upAr = getResources().getDrawable(R.drawable.back_arrow);
+            upAr.setColorFilter(getResources().getColor(android.R.color.white), PorterDuff.Mode.SRC_ATOP);
+            bar.setHomeAsUpIndicator(upAr);
+            bar.setDisplayHomeAsUpEnabled(true);
+        }
 
         getPreferenceManager().setSharedPreferencesName(Preferences.PREF_NAME);
         PreferenceManager.setDefaultValues(this, R.xml.preferences, false);
@@ -143,6 +156,16 @@ public class SettingsActivity extends PreferenceActivity implements OnPreference
             startActivity(intent);
         }
         return false;
+    }
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                finish();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 
     @Override

@@ -21,16 +21,26 @@ import android.content.Context;
 import android.os.PowerManager;
 import android.util.Log;
 
-public class Tools {
+public class Tools implements Constants {
+
+    public final String TAG = this.getClass().getSimpleName();
 
     public static boolean recovery(Context context) {
+        return rebootPhone(context, "recovery");
+    }
+
+    private static boolean rebootPhone(Context context, String type) {
         boolean success = true;
         try {
             PowerManager powerManager = (PowerManager) context.getSystemService(Context.POWER_SERVICE);
             powerManager.reboot("recovery");
         } catch (Exception e) {
             success = false;
-            Log.e("Tools", "reboot recovery error: "+ e.getMessage());
+            try {
+                Thread.sleep(500);
+            } catch (InterruptedException ignored) {
+            }
+            Log.e("Tools", "reboot '"+type+"' error: "+e.getMessage());
         }
         return success;
     }

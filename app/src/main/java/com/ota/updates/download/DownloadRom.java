@@ -48,7 +48,7 @@ public class DownloadRom implements Constants {
         if(Preferences.getNetworkType(context).equals(WIFI_ONLY)) {
             // All network types are enabled by default
             // So if we choose Wi-Fi only, then enable the restriction
-            request.setAllowedNetworkTypes(DownloadManager.Request.NETWORK_WIFI);
+            request.setAllowedNetworkTypes(DownloadManager.Request.NETWORK_WIFI | DownloadManager.Request.NETWORK_MOBILE);
         }
 
         request.setTitle(context.getResources()

@@ -47,11 +47,6 @@ public class AboutActivity extends Activity {
         setContentView(R.layout.ota_about);
 
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_about);
-        setActionBar(toolbar);
-        toolbar.setTitle(getResources().getString(R.string.app_name));
-
-
         CardView creditsView = (CardView) findViewById(R.id.credits_cardview);
         creditsView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -88,6 +83,7 @@ public class AboutActivity extends Activity {
     public ArrayList<CreditsItem> getListData(){
         ArrayList<CreditsItem> returnedArray = new ArrayList<>();
         returnedArray.add(new CreditsItem("Matthew Booth","Anything not mentioned below"));
+                returnedArray.add(new CreditsItem("Dot OS"," "));
                 returnedArray.add(new CreditsItem("Harsh Shandilya","Nougat bringup and code cleanup"));
                 returnedArray.add(new CreditsItem("Roman Nurik","Android Asset Studio Framework"));
                 returnedArray.add(new CreditsItem("StackOverflow","Many many people"));

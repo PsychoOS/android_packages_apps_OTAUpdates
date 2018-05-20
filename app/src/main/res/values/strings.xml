@@ -22,8 +22,8 @@
     <!-- DO NOT TRANSLATE THE ITEMS MARKED "translatable="false" -->
 
     <!-- App Strings -->
-    <string name="app_name" translatable="false">OTA Updates</string>
-    <string name="app_version" translatable="false">4.0.0</string>
+    <string name="app_name" translatable="false">Psycho Updates</string>
+    <string name="app_version" translatable="false">1.0.0</string>
     <string name="changelog_url" translatable="false">https://raw.githubusercontent.com/MatthewBooth/OTAUpdates/stable/Changelog.md</string>
 
     <!-- Generic strings -->
@@ -38,7 +38,6 @@
     <string name="information">Information</string>
     <string name="update_available">ROM update available</string>
     <string name="ignore">Ignore</string>
-    <string name="donate">Donate</string>
     <string name="finished">Finished</string>
     <string name="settings">Settings</string>
     <string name="done">Done</string>

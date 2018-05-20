@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
     Copyright (C) 2015 Matt Booth (Kryten2k35).
-    Copyright (C) 2017 Bruno Acerbis
+    Copyright (C) 2017 The halogenOS Project.
 
     Licensed under the Attribution-NonCommercial-ShareAlike 4.0 International
     (the "License") you may not use this file except in compliance with the License.
@@ -22,20 +22,21 @@
     <!-- DO NOT TRANSLATE THE ITEMS MARKED "translatable="false" -->
 
     <!-- Generic strings -->
-    <string name="cancel">Annulla</string>
-    <string name="ok">OK</string>
-    <string name="delete">Elimina</string>
-    <string name="loading">Caricamento&#8230;</string>
-    <string name="download">Scarica</string>
-    <string name="install">Installa</string>
-    <string name="downloading">Scaricamento in corso&#8230;</string>
-    <string name="rebooting">Riavvio in corso&#8230;</string>
-    <string name="information">Informazioni</string>
-    <string name="update_available">Aggiornamento ROM disponibile</string>
-    <string name="ignore">Ignora</string>
-    <string name="finished">Completato</string>
-    <string name="settings">Impostazioni</string>
-    <string name="done">Fatto</string>
-    <string name="delete_confirm">Sei sicuro di voler eliminare questo file?</string>
+    <string name="cancel">取消</string>
+    <string name="ok">确定</string>
+    <string name="delete">删除</string>
+    <string name="loading">读取中...</string>
+    <string name="download">下载</string>
+    <string name="install">安装</string>
+    <string name="downloading">下载中...</string>
+    <string name="rebooting">正在重启...</string>
+    <string name="information">信息</string>
+    <string name="update_available">ROM 有可用更新</string>
+    <string name="ignore">忽略</string>
+    <string name="finished">已完成</string>
+    <string name="settings">设置</string>
+    <string name="done">完成</string>
+    <string name="delete_confirm">你确定要删除这个文件吗？</string>
+    <string name="reboot_failed">重启到 recovery 失败</string>
 
 </resources>

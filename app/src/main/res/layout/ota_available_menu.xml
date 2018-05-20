@@ -28,10 +28,11 @@
 
         <Button
             android:id="@+id/menu_available_check_md5"
-            style="?android:attr/borderlessButtonStyle"
+            style="@style/Widget.AppCompat.Button.Borderless.Colored"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/available_check_md5" />
+            android:text="@string/available_check_md5"
+            android:textColor="@color/material_primary" />
     </LinearLayout>
 
     <LinearLayout
@@ -41,10 +42,11 @@
 
         <Button
             android:id="@+id/menu_available_delete"
-            style="?android:attr/borderlessButtonStyle"
+            style="@style/Widget.AppCompat.Button.Borderless.Colored"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/delete" />
+            android:text="@string/delete"
+            android:textColor="@color/material_primary" />
     </LinearLayout>
 
     <LinearLayout
@@ -56,24 +58,27 @@
 
         <Button
             android:id="@+id/menu_available_download"
-            style="?android:attr/borderlessButtonStyle"
+            style="@style/Widget.AppCompat.Button.Borderless.Colored"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/download" />
+            android:text="@string/download"
+            android:textColor="@color/material_primary" />
 
         <Button
             android:id="@+id/menu_available_cancel"
-            style="?android:attr/borderlessButtonStyle"
+            style="@style/Widget.AppCompat.Button.Borderless.Colored"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/cancel" />
+            android:text="@string/cancel"
+            android:textColor="@color/material_primary" />
 
         <Button
             android:id="@+id/menu_available_install"
-            style="?android:attr/borderlessButtonStyle"
+            style="@style/Widget.AppCompat.Button.Borderless.Colored"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/install" />
+            android:text="@string/install"
+            android:textColor="@color/material_primary" />
     </LinearLayout>
 
 </RelativeLayout>

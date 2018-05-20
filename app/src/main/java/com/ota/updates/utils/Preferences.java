@@ -123,6 +123,12 @@ public class Preferences implements Constants{
         editor.apply();
     }
 
+    public static void setTheme(Context context, String value) {
+        SharedPreferences.Editor editor = getPrefs(context).edit();
+        editor.putString(CURRENT_THEME, value);
+        editor.apply();
+    }
+
     public static void setDeleteAfterInstall(Context context, boolean value) {
         SharedPreferences.Editor editor = getPrefs(context).edit();
         editor.putBoolean(DELETE_AFTER_INSTALL, value);
@@ -177,9 +183,9 @@ public class Preferences implements Constants{
         editor.apply();
     }
 
-    public static void setFirstRun(Context context) {
+    public static void setFirstRun(Context context, boolean value) {
         SharedPreferences.Editor editor = getPrefs(context).edit();
-        editor.putBoolean(FIRST_RUN, false);
+        editor.putBoolean(FIRST_RUN, value);
         editor.apply();
     }
 }

@@ -22,24 +22,33 @@ endif
 
 # Cardview Dir
 cardview_dir := $(LOCAL_PATH)/../../../frameworks/support/v7/cardview
+appcompat_dir := $(LOCAL_PATH)/../../../frameworks/support/v7/appcompat
+design_dir := $(LOCAL_PATH)/../../../frameworks/support/design
 
 LOCAL_MANIFEST_FILE := app/src/main/AndroidManifest.xml
 LOCAL_SRC_FILES := $(call all-java-files-under, app/src/main)
 LOCAL_RESOURCE_DIR := $(LOCAL_PATH)/app/src/main/res
-LOCAL_RESOURCE_DIR += $(cardview_dir)/res
+LOCAL_RESOURCE_DIR += \
+	$(cardview_dir)/res \
+	$(appcompat_dir)/res \
+	$(design_dir)/res
 
 LOCAL_AAPT_FLAGS := \
 	--auto-add-overlay \
 	--extra-packages android.support.v7.cardview \
-        --extra-packages android.support.v4
+        --extra-packages android.support.v4 \
+	--extra-packages android.support.v7.appcompat \
+	--extra-packages android.support.design
 
-LOCAL_PACKAGE_NAME := OTAUpdates
+LOCAL_PACKAGE_NAME := PsychoOTA
 
 LOCAL_MODULE_TAGS := optional
 
 LOCAL_STATIC_JAVA_LIBRARIES := \
 	android-support-v4 \
-	android-support-v7-cardview
+	android-support-v7-cardview \
+	android-support-v7-appcompat \
+	android-support-design  
 
 LOCAL_JNI_SHARED_LIBRARIES := libbypass
 

@@ -18,20 +18,21 @@
 <resources>
 
     <!-- Palette colors for Material UI -->
-    <color name="material_primary">@color/material_blue_grey_900</color>
-    <color name="material_primary_dark">@color/material_blue_grey_950</color>
+    <color name="material_primary">#2196F3</color>
+    <color name="material_primary_dark">#1e88e5</color>
     <color name="accent_material_dark">@color/material_deep_teal_200</color>
     <color name="material_deep_teal_200">#ff80cbc4</color>
     <color name="material_red_500">#fff44336</color>
-    <color name="material_blue_grey_800">#ff37474f</color>
+    <color name="material_blue_grey_800">#ffffff</color>
     <color name="material_blue_grey_900">#ff263238</color>
     <color name="material_blue_grey_950">#ff21272b</color>
     <color name="material_light_green_500">#ff8bC34a</color>
-    <color name="material_background_dark">#1f292f</color>
+    <color name="material_background_dark">#ffffff</color>
     <color name="card_background_material_dark">@color/material_blue_grey_800</color>
-    <color name="primary_text_material_dark">#ffffffff</color>
-    <color name="secondary_text_material_dark">#b3ffffff</color>
+    <color name="primary_text_material_dark">#484747</color>
+    <color name="secondary_text_material_dark">#b34b4b4b</color>
     <color name="ripple_material_dark">#40ffffff</color>
     <color name="separator_dark">#ff333333</color>
+    <color name="accent">#F44336</color>
 
 </resources>

@@ -14,52 +14,46 @@
     See the License for the specific language governing permissions and
     limitations under the License.
 -->
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical" >
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
 
-    <Toolbar
-        android:id="@+id/toolbar_available_top"
-        android:layout_width="match_parent"
-        android:layout_height="56dp"
-        android:background="?attr/colorPrimary"
-        android:theme="@style/Theme.RagnarDark"
-        android:title="@string/app_name" />
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="10dp"
-        android:layout_below="@id/toolbar_available_top"
-        android:background="@drawable/toolbar_dropshadow" />
-
-    <LinearLayout
+    <RelativeLayout
+        android:id="@+id/gag1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="56dp"
-        android:orientation="vertical"
-        android:padding="16dp" >
+        android:layout_marginBottom="12dp"
+        android:padding="16dp">
 
         <TextView
             android:id="@+id/tv_available_update_name"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_marginStart="14dp"
+            android:layout_marginTop="27dp"
             android:text="@string/available_update_name"
-            android:textSize="28sp" />
+            android:textSize="18sp" />
 
         <ProgressBar
             android:id="@+id/bar_available_progress_bar"
             style="?android:attr/progressBarStyleHorizontal"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_below="@+id/tv_available_update_name"
             android:layout_marginBottom="10dp"
-            android:layout_marginTop="10dp" />
+            android:progressTint="@android:color/holo_blue_dark"
+            android:visibility="invisible" />
 
         <TextView
             android:id="@+id/tv_available_progress_counter"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_below="@+id/bar_available_progress_bar"
             android:layout_gravity="end"
             android:text="@string/available_progress_counter"
             android:textColor="?attr/textColorSecondary"
@@ -70,6 +64,8 @@
             android:id="@+id/tv_available_md5"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_below="@+id/tv_available_progress_counter"
             android:layout_gravity="end"
             android:text="@string/available_md5"
             android:textColor="?attr/textColorSecondary"
@@ -77,49 +73,63 @@
             tools:ignore="SmallSp" />
 
         <TextView
+            android:id="@+id/ssr1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_below="@+id/tv_available_md5"
             android:layout_gravity="end"
             android:textSize="10sp"
             tools:ignore="SmallSp" />
 
-        <View
-            style="@style/HorizontalSeparator"
-            android:layout_marginBottom="8dp"
-            android:layout_marginTop="8dp" />
+        <Toolbar
+            android:id="@+id/toolbar_available_bottom"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:layout_alignParentBottom="false"
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/ssr1"
+            android:theme="@style/Theme.RagnarDark">
 
-        <ScrollView
+            <include layout="@layout/ota_available_menu" />
+        </Toolbar>
+
+        <android.support.v7.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="56dp" >
+            android:layout_below="@+id/toolbar_available_bottom"
+            android:layout_marginBottom="6dp"
+            android:layout_marginTop="20dp"
+            app:cardCornerRadius="6dp"
+            app:cardElevation="1dp">
 
-            <LinearLayout
+            <ScrollView
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical" >
+                android:layout_height="match_parent"
+                android:layout_marginBottom="56dp">
 
-                <TextView
-                    android:id="@+id/tv_available_changelog_content"
-                    android:layout_width="wrap_content"
+                <LinearLayout
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:singleLine="false"
-                    android:text="@string/available_changelog_content"
-                    android:textAppearance="?android:attr/textAppearanceSmall"
-                    android:textColor="?attr/textColorSecondary" />
-            </LinearLayout>
-        </ScrollView>
-    </LinearLayout>
+                    android:gravity="center"
+                    android:orientation="vertical">
 
-    <Toolbar
-        android:id="@+id/toolbar_available_bottom"
-        android:layout_width="match_parent"
-        android:layout_height="56dp"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentStart="true"
-        android:background="?attr/colorPrimary"
-        android:theme="@style/Theme.RagnarDark" >
+                    <TextView
+                        android:id="@+id/tv_available_changelog_content"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="6dp"
+                        android:gravity="center"
+                        android:singleLine="false"
+                        android:text="@string/available_changelog_content"
+                        android:textAlignment="center"
+                        android:textAppearance="?android:attr/textAppearanceSmall"
+                        android:textColor="?attr/textColorSecondary" />
+                </LinearLayout>
+            </ScrollView>
 
-        <include layout="@layout/ota_available_menu" />
-    </Toolbar>
+        </android.support.v7.widget.CardView>
 
-</RelativeLayout>
+    </RelativeLayout>
+
+</LinearLayout>

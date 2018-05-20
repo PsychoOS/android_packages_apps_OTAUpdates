@@ -17,14 +17,14 @@
 -->
 <resources>
 
-    <string name="about_about_title">About</string>
-    <string name="about_preferences_summary">PsychoOTA information, donation and credits</string>
-    <string name="about_credits_title">Credits</string>
-    <string name="about_credits_summary">Everyone who helped make this app!</string>
-    <string name="about_version_title">Version</string>
-    <string name="about_app_version">App version:</string>
-    <string name="changelog">Changelog</string>
-    <string name="changelog_summary">View the app\'s changelog</string>
-    <string name="changelog_error">Error reading changelog</string>
+    <string name="about_about_title">关于</string>
+    <string name="about_preferences_summary">DotOTA信息，捐赠和贡献</string>
+    <string name="about_credits_title">贡献</string>
+    <string name="about_credits_summary">所有帮助制作这个应用的人！</string>
+    <string name="about_version_title">版本</string>
+    <string name="about_app_version">应用版本：</string>
+    <string name="changelog">更新日志</string>
+    <string name="changelog_summary">查看应用更新日志</string>
+    <string name="changelog_error">读取更新日志失败</string>
 
 </resources>

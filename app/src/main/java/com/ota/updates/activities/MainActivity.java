@@ -17,6 +17,8 @@
 
 package com.ota.updates.activities;
 
+import android.Manifest;
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.AlertDialog.Builder;
@@ -27,19 +29,29 @@ import android.content.DialogInterface;
 import android.content.DialogInterface.OnClickListener;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
+import android.provider.ContactsContract;
+import android.support.design.widget.FloatingActionButton;
+import android.support.v4.app.ActivityCompat;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.CardView;
+import android.support.v7.widget.Toolbar;
 import android.text.format.DateFormat;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.Window;
 import android.view.WindowManager;
+import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toolbar;
 import com.ota.updates.R;
 import com.ota.updates.RomUpdate;
 import com.ota.updates.tasks.Changelog;
@@ -52,8 +64,9 @@ import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
+import java.util.Objects;
 
-public class MainActivity extends Activity implements Constants{
+public class MainActivity extends AppCompatActivity implements Constants{
 
     public final String TAG = this.getClass().getSimpleName();
 
@@ -81,20 +94,38 @@ public class MainActivity extends Activity implements Constants{
         }
     };
 
+    public int getStatusBarHeight() {
+        int result = 0;
+        int resourceId = getResources().getIdentifier("status_bar_height", "dimen", "android");
+        if (resourceId > 0)
+        {
+            result = getResources().getDimensionPixelSize(resourceId);
+        }
+        return result;
+    }
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
 
         mContext = this;
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.ota_main);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_main);
-        setActionBar(toolbar);
-        toolbar.setTitle(getResources().getString(R.string.app_name));
-
+        setContentView(R.layout.main);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar3);
+        setSupportActionBar(toolbar);
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS,
+                WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+        toolbar.setPadding(0, getStatusBarHeight(), 0, 0);
+        isStoragePermissionGranted();
         boolean firstRun = Preferences.getFirstRun(mContext);
         if(firstRun) {
-            Preferences.setFirstRun(mContext);
+            Preferences.setFirstRun(mContext, false);
             showWhatsNew();
+        }
+
+        if (getSupportActionBar() != null)
+        {
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            getSupportActionBar().setDisplayShowHomeEnabled(true);
         }
 
         String oldChangelog = Preferences.getOldChangelog(mContext);
@@ -111,7 +142,6 @@ public class MainActivity extends Activity implements Constants{
                 + INSTALL_AFTER_FLASH_DIR);
         if (!installAfterFlashDir.mkdirs()) Log.e(TAG,"Download directory creation failed");
 
-        createDialogs();
 
         // Check the correct build prop values are installed
         // Also executes the manifest/update check
@@ -141,7 +171,18 @@ public class MainActivity extends Activity implements Constants{
         updateRomInformation();
         updateRomUpdateLayouts();
         updateWebsiteLayout();
+
     }
+    public  boolean isStoragePermissionGranted() {
+        if (checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                == PackageManager.PERMISSION_GRANTED) {
+            return true;
+        } else {
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 1);
+            return false;
+        }
+    }
+
 
     @Override
     public void onStart() {
@@ -172,98 +213,21 @@ public class MainActivity extends Activity implements Constants{
             case R.id.menu_settings:
                 openSettings(null);
                 return true;
+            case android.R.id.home :
+                finish();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
             }
-            return false;
     }
 
-    private void createDialogs() {
-        // Compatibility Dialog
-        mCompatibilityDialog = new AlertDialog.Builder(mContext);
-        mCompatibilityDialog.setCancelable(false);
-        mCompatibilityDialog.setTitle(R.string.main_not_compatible_title);
-        mCompatibilityDialog.setMessage(R.string.main_not_compatible_message);
-        mCompatibilityDialog.setPositiveButton(R.string.ok, new OnClickListener() {
-
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                MainActivity.this.finish();
-            }
-        });
-
-        // Donate Dialog
-        mDonateDialog = new AlertDialog.Builder(this);
-        String[] donateItems = { "PayPal" };
-        mDonateDialog.setTitle(getResources().getString(R.string.donate))
-        .setSingleChoiceItems(donateItems, 0, null)
-        .setPositiveButton(getResources().getString(R.string.ok), new DialogInterface.OnClickListener() {
-
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                String url;
-                Intent intent = new Intent(Intent.ACTION_VIEW);
-                int selectedPosition = ((AlertDialog)dialog).getListView().getCheckedItemPosition();
-                if (selectedPosition == 0) {
-                    url = RomUpdate.getDonateLink(mContext);
-                    if (url != null){
-                        final Uri uri = Uri.parse(url);
-                        if (uri.getScheme() == null){
-                            url = "http://" + url;
-                        }
-                    } else {
-                        return;
-                    }
-                    intent.setData(Uri.parse(url));
-                }
-
-                try {
-                    startActivity(intent);
-                } catch(ActivityNotFoundException ex) {
-                    // Nothing to handle BitCoin payments. Send to Play Store
-                    if (DEBUGGING)
-                        Log.d(TAG, ex.getMessage());
-                    mPlayStoreDialog.show();
-                }
-            }
-        })
-        .setNegativeButton(getResources().getString(R.string.cancel), new DialogInterface.OnClickListener() {
-
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                dialog.cancel();
-            }
-        });
-
-        mPlayStoreDialog = new AlertDialog.Builder(mContext);
-        mPlayStoreDialog.setCancelable(true);
-        mPlayStoreDialog.setTitle(R.string.main_playstore_title);
-        mPlayStoreDialog.setMessage(R.string.main_playstore_message);
-        mPlayStoreDialog.setPositiveButton(R.string.ok, new OnClickListener() {
-
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                Intent intent = new Intent(Intent.ACTION_VIEW);
-                String url = "https://play.google.com/store/search?q=bitcoin%20wallet&c=apps";
-                intent.setData(Uri.parse(url));
-                startActivity(intent);
-            }
-        });
-        mPlayStoreDialog.setNegativeButton(getResources().getString(R.string.cancel), new DialogInterface.OnClickListener() {
-
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                dialog.cancel();
-            }
-        });
-    }
 
     private void updateRomUpdateLayouts() {
-        View updateAvailable;
         View updateNotAvailable;
-        updateAvailable = findViewById(R.id.layout_main_update_available);
+        FloatingActionButton down_fab = (FloatingActionButton) findViewById(R.id.layout_main_update_available);
         updateNotAvailable = findViewById(R.id.layout_main_no_update_available);
-        updateAvailable.setVisibility(View.GONE);
         updateNotAvailable.setVisibility(View.GONE);
-
+        down_fab.setVisibility(View.GONE);
         TextView updateAvailableSummary = (TextView) findViewById(R.id.main_tv_update_available_summary);
         TextView updateNotAvailableSummary = (TextView) findViewById(R.id.main_tv_no_update_available_summary);
 
@@ -273,8 +237,13 @@ public class MainActivity extends Activity implements Constants{
         // Update is available
         if (RomUpdate.getUpdateAvailability(mContext) ||
                 (!RomUpdate.getUpdateAvailability(mContext)) && Utils.isUpdateIgnored(mContext)) {
-            updateAvailable.setVisibility(View.VISIBLE);
+            updateNotAvailable.setVisibility(View.GONE);
+            down_fab.setVisibility(View.VISIBLE);
             TextView updateAvailableTitle = (TextView) findViewById(R.id.main_tv_update_available_title);
+
+            if (Objects.equals(Utils.getProp("ro.psycho.version"), RomUpdate.getVersionName(mContext))) {
+                down_fab.setVisibility(View.GONE);
+            }
 
             if (Preferences.getDownloadFinished(mContext)) { //  Update already finished?
                 updateAvailableTitle.setText(getResources().getString(R.string.main_update_finished));
@@ -293,7 +262,6 @@ public class MainActivity extends Activity implements Constants{
                         + "\n\n"
                         + getResources().getString(R.string.main_tap_to_download);
                 updateAvailableSummary.setText(updateSummary);
-
             }
         } else {
             updateNotAvailable.setVisibility(View.VISIBLE);
@@ -346,18 +314,21 @@ public class MainActivity extends Activity implements Constants{
 
         //ROM name
         TextView romName = (TextView) findViewById(R.id.tv_main_rom_name);
-        String romNameActual;
-        try {
-            romNameActual =  Utils.getProp(OTA_ROMNAME).split("_")[1];
-        }catch (IndexOutOfBoundsException exc){
-            romNameActual = Utils.getProp(OTA_ROMNAME);
+        String romNameActual = Utils.getProp("ro.psycho.build.version");
+        String OurRomName = "Psycho OS";
+        if (romNameActual == null) {
+            romNameActual = "Unknown";
+            OurRomName = "null";
         }
-        romName.setText(String.format(getString(R.string.main_rom_device), romNameActual));
+        
+        String getDevice, Brand;
+        Brand = Utils.getProp("ro.product.brand");
+        getDevice = Utils.getProp("ro.product.model");
+        romName.setText(String.format(getString(R.string.main_rom_device), Brand + " " + getDevice));
 
         //ROM version
         TextView romVersion = (TextView) findViewById(R.id.tv_main_rom_version);
-        String romVersionActual = Utils.getProp(OTA_VERSION);
-        romVersion.setText(String.format(getString(R.string.main_rom_version), romVersionActual));
+        romVersion.setText(String.format(getString(R.string.main_rom_version), OurRomName + " v" + romNameActual));
 
         //ROM date
         TextView romDate = (TextView) findViewById(R.id.tv_main_rom_date);
@@ -469,14 +440,6 @@ public class MainActivity extends Activity implements Constants{
                 if (DEBUGGING)
                     Log.d(TAG, "Prop found");
                 new LoadUpdateManifest(mContext, true).execute();
-            } else {
-                if (DEBUGGING)
-                    Log.d(TAG, "Prop not found");
-                try {
-                    mCompatibilityDialog.show();
-                } catch(WindowManager.BadTokenException ex) {
-                    Log.e(TAG, ex.getMessage());
-                }
             }
             super.onPostExecute(result);
         }

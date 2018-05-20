@@ -31,7 +31,7 @@ public interface Constants {
 
     // Storage
     String SD_CARD                          = Environment.getExternalStorageDirectory().getAbsolutePath();
-    String OTA_DOWNLOAD_DIR                 = Utils.doesPropExist(OTA_DOWNLOAD_LOC) ? Utils.getProp(OTA_DOWNLOAD_LOC) : "OTAUpdates";
+    String OTA_DOWNLOAD_DIR                 = Utils.doesPropExist(OTA_DOWNLOAD_LOC) ? Utils.getProp(OTA_DOWNLOAD_LOC) : "PsychoUpdates";
     String INSTALL_AFTER_FLASH_DIR          = "InstallAfterFlash";
 
     // Networks
