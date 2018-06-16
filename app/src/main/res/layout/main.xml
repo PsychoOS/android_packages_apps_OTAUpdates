@@ -15,13 +15,21 @@
         app:title="Updates"
         android:translationZ="100dp"/>
 
-    <ImageView
-        android:id="@+id/mainBg"
+    <android.support.v7.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:adjustViewBounds="true"
-        android:scaleType="centerCrop"
-        android:src="@drawable/bg" />
+        android:id="@+id/mainBg"
+        app:cardElevation="4dp"
+        app:cardCornerRadius="12dp">
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:adjustViewBounds="true"
+            android:scaleType="centerCrop"
+            android:src="@drawable/bg" />
+
+    </android.support.v7.widget.CardView>
 
     <include
         layout="@layout/card_update"
